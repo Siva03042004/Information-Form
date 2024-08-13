@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Using css -->
+    <style>
+        body {
+            margin: 20px;
+            background-color: black;
+            font-weight: bold;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        table {
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: center;
+            color: white;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid grey;
+            border-radius: 8px;
+            color: white;
+            background-color: black;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Using HTML -->
+    <div class="form-container">
+        <h2 class="text-center">Information Form</h2>
+        <form id="myform">
+            <div class="form-group">
+                <label for="iname">Name:</label>
+                <input id="iname" type="text" class="form-control" placeholder="Enter your Name">
+            </div>
+            <div class="form-group">
+                <label for="iemail">Email ID:</label>
+                <input id="iemail" type="email" class="form-control" placeholder="Enter your Email ID">
+            </div>
+            <div class="form-group">
+                <label>Gender:</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="Gender" value="Male">
+                    <label class="form-check-label">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="Gender" value="Female">
+                    <label class="form-check-label">Female</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="icourse">Course:</label>
+                <select id="icourse" class="form-control">
+                    <option value="none">None</option>
+                    <option value="BCA">BCA</option>
+                    <option value="Bsc.CS">Bsc.CS</option>
+                    <option value="Bsc.IT">Bsc.IT</option>
+                </select>
+            </div>
+            <button id="save" type="button" class="btn btn-dark btn-block">Save</button>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table id="newtable" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Email ID</th>
+                    <th>Gender</th>
+                    <th>Course</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Using Java Script -->
+    <script>
+        document.getElementById("save").addEventListener("click", () => {
+            let name = document.getElementById("iname").value;
+            let email = document.getElementById("iemail").value;
+            let gender = document.querySelector('input[name="Gender"]:checked')?.value;
+            let course = document.getElementById("icourse").value;
+
+            if (!name || !email || !gender || course === "none") {
+                alert("Please fill out all fields correctly.");
+                return;
+            }
+
+            let newTable = document.getElementById("newtable").getElementsByTagName('tbody')[0];
+
+            let newRow = newTable.insertRow();
+
+            let cell1 = newRow.insertCell(0);
+            let cell2 = newRow.insertCell(1);
+            let cell3 = newRow.insertCell(2);
+            let cell4 = newRow.insertCell(3);
+            let cell5 = newRow.insertCell(4);
+
+            cell1.textContent = name;
+            cell2.textContent = email;
+            cell3.textContent = gender;
+            cell4.textContent = course;
+            cell5.innerHTML = '<button class="btn btn-danger btn-sm" onclick="delRow(event)">Delete</button>';
+
+            document.getElementById("myform").reset();
+        });
+
+        const delRow = (event) => {
+            event.target.closest("tr").remove();
+        }
+    </script>
+</body>
+</html>
